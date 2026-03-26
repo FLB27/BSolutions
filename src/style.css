@@ -1,3 +1,4 @@
+
 /* ============================================
    BEE Application - Design System CSS
    Cohérent avec l'application iOS
@@ -75,6 +76,10 @@
     --bee-transition-fast: 150ms ease;
     --bee-transition-normal: 250ms ease;
     --bee-transition-slow: 350ms ease;
+
+    /* Nav width */
+    --bee-nav-width: 220px;
+    --bee-header-height: 64px;
 }
 
 /* ===== Reset et Base ===== */
@@ -92,7 +97,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: var(--bee-font-family);
-    font-weight: 700;
+    font-weight: 400;
     line-height: 1.5;
     color: var(--bee-on-surface);
     background: var(--bee-gradient-background);
@@ -142,8 +147,8 @@ p {
     grid-template-areas:
         "nav head"
         "nav main";
-    grid-template-rows: auto 1fr;
-    grid-template-columns: 220px 1fr;
+    grid-template-rows: var(--bee-header-height) 1fr;
+    grid-template-columns: var(--bee-nav-width) 1fr;
 }
 
 /* ===== Header ===== */
@@ -153,16 +158,19 @@ p {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    padding: var(--bee-spacing-md) var(--bee-spacing-lg);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    padding: var(--bee-spacing-sm) var(--bee-spacing-lg);
     border-bottom: 1px solid var(--bee-gray-200);
     backdrop-filter: blur(10px);
+    height: var(--bee-header-height);
 }
 
 header h1 {
     margin: 0;
     font-family: 'Inter', sans-serif;
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 700;
     background: var(--bee-gradient-primary);
     -webkit-background-clip: text;
@@ -216,6 +224,8 @@ header .profil .user-icon {
     min-height: 100vh;
     position: sticky;
     top: 0;
+    height: 100vh;
+    overflow-y: auto;
 }
 
 nav .bee-icon {
@@ -281,7 +291,7 @@ nav .deconnexion:hover {
     grid-area: main;
     background: var(--bee-background);
     padding: var(--bee-spacing-lg);
-    min-height: calc(100vh - 80px);
+    min-height: calc(100vh - var(--bee-header-height));
     overflow-y: auto;
 }
 
@@ -478,12 +488,13 @@ nav .deconnexion:hover {
     line-height: 1.6;
     z-index: 1000;
     box-shadow: var(--bee-shadow-sm);
+    white-space: nowrap;
 }
 
 /* ===== Scrollbar personnalisée ===== */
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -566,57 +577,114 @@ nav .deconnexion:hover {
     max-width: 300px;
 }
 
-/* ===== Responsive ===== */
+/* ===== Responsive — Tablette ===== */
 @media (max-width: 1024px) {
+    :root {
+        --bee-nav-width: 180px;
+    }
+
     #page {
-        grid-template-columns: 180px 1fr;
+        grid-template-columns: var(--bee-nav-width) 1fr;
+    }
+
+    nav .bee-icon {
+        width: 60px;
+        height: 60px;
     }
 }
 
+/* ===== Responsive — Mobile ===== */
 @media (max-width: 768px) {
+    :root {
+        --bee-header-height: 56px;
+    }
+
+    /* Layout mobile : header en haut, main prend tout */
     #page {
         grid-template-areas:
             "head"
-            "main"
-            "nav";
+            "main";
         grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr auto;
+        grid-template-rows: var(--bee-header-height) 1fr;
     }
-    
+
+    /* La nav est hors du flux (drawer géré dans DashboardLayout.vue) */
     #page > nav {
-        flex-direction: row;
-        justify-content: space-around;
-        padding: var(--bee-spacing-sm);
-        border-right: none;
-        border-top: 1px solid var(--bee-gray-200);
-        position: fixed;
-        bottom: 0;
+        grid-area: unset;
+        position: fixed !important;
+        top: 0;
         left: 0;
-        right: 0;
-        min-height: auto;
+        bottom: 0;
+        width: 260px !important;
         z-index: 100;
+        transform: translateX(-100%);
+        transition: transform var(--bee-transition-normal);
+        min-height: 100dvh;
     }
-    
-    nav .bee-icon {
-        display: none;
+
+    #page > nav.mobile-open {
+        transform: translateX(0) !important;
     }
-    
-    nav .nav-head {
-        flex-direction: row;
-        justify-content: space-around;
+
+    /* Header mobile */
+    #page > header {
+        justify-content: center;
+        padding: var(--bee-spacing-sm) var(--bee-spacing-md);
+        position: sticky;
+        top: 0;
+        z-index: 50;
     }
-    
-    nav .accueil,
-    nav .modules,
-    nav .ruchers,
-    nav .notes {
-        flex-direction: column;
-        padding: var(--bee-spacing-xs);
-        font-size: 11px;
-        gap: 2px;
+
+    header h1 {
+        font-size: 20px;
     }
-    
+
+    header .profil {
+        right: var(--bee-spacing-md);
+        padding: var(--bee-spacing-xs) var(--bee-spacing-sm);
+        font-size: 13px;
+    }
+
+    header .profil .user-icon {
+        width: 26px;
+        height: 26px;
+    }
+
+    /* Main avec padding bottom pour la barre du bas */
     #page > main {
-        padding-bottom: 80px;
+        padding: var(--bee-spacing-md);
+        padding-bottom: calc(68px + var(--bee-spacing-md));
+        min-height: calc(100dvh - var(--bee-header-height));
+    }
+
+    /* Filtres map plus compacts */
+    .filters {
+        top: var(--bee-spacing-sm);
+        padding: var(--bee-spacing-xs);
+    }
+
+    .filters button {
+        padding: var(--bee-spacing-xs) var(--bee-spacing-sm);
+        font-size: 12px;
+    }
+}
+
+/* ===== Responsive — Petit mobile ===== */
+@media (max-width: 480px) {
+    #page > main {
+        padding: var(--bee-spacing-sm);
+        padding-bottom: calc(68px + var(--bee-spacing-sm));
+    }
+
+    .card {
+        padding: var(--bee-spacing-sm);
+    }
+
+    h2 { font-size: 20px; }
+    h3 { font-size: 18px; }
+
+    .legende {
+        font-size: 11px;
+        padding: var(--bee-spacing-xs) var(--bee-spacing-sm);
     }
 }
