@@ -1,0 +1,622 @@
+/* ============================================
+   BEE Application - Design System CSS
+   Cohérent avec l'application iOS
+   ============================================ */
+
+/* Import de la police Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ===== Variables CSS (Design Tokens) ===== */
+:root {
+    /* Couleurs principales */
+    --bee-honey: #FFB700;
+    --bee-honey-light: #FFD54F;
+    --bee-honey-dark: #F9A825;
+    --bee-amber: #FFAB00;
+    
+    /* Couleurs de surface */
+    --bee-surface: #FFFFFF;
+    --bee-surface-variant: #F5F5F5;
+    --bee-background: #FFF8E1;
+    --bee-background-dark: #F6F1E3;
+    
+    /* Couleurs de texte */
+    --bee-on-surface: #1C1B1F;
+    --bee-on-surface-variant: #6B6B6B;
+    --bee-on-primary: #FFFFFF;
+    
+    /* Couleurs sémantiques */
+    --bee-success: #4CAF50;
+    --bee-success-light: #81C784;
+    --bee-error: #F44336;
+    --bee-error-light: #E57373;
+    --bee-warning: #FF9800;
+    --bee-info: #2196F3;
+    
+    /* Couleurs neutres */
+    --bee-gray-100: #F5F5F5;
+    --bee-gray-200: #EEEEEE;
+    --bee-gray-300: #E0E0E0;
+    --bee-gray-400: #BDBDBD;
+    --bee-gray-500: #9E9E9E;
+    --bee-gray-600: #757575;
+    
+    /* Dégradés */
+    --bee-gradient-primary: linear-gradient(135deg, #FFB700 0%, #FF9500 100%);
+    --bee-gradient-background: linear-gradient(180deg, #FFF8E1 0%, #F6F1E3 100%);
+    --bee-gradient-card: linear-gradient(145deg, rgba(255,255,255,0.95) 0%, rgba(255,248,225,0.9) 100%);
+    --bee-gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 100%);
+    
+    /* Espacements */
+    --bee-spacing-xs: 4px;
+    --bee-spacing-sm: 8px;
+    --bee-spacing-md: 16px;
+    --bee-spacing-lg: 24px;
+    --bee-spacing-xl: 32px;
+    --bee-spacing-xxl: 48px;
+    
+    /* Rayons de bordure */
+    --bee-radius-sm: 8px;
+    --bee-radius-md: 12px;
+    --bee-radius-lg: 16px;
+    --bee-radius-xl: 24px;
+    --bee-radius-full: 9999px;
+    
+    /* Ombres */
+    --bee-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --bee-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+    --bee-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.16);
+    --bee-shadow-colored: 0 8px 24px rgba(255, 183, 0, 0.3);
+    
+    /* Typographie */
+    --bee-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    
+    /* Transitions */
+    --bee-transition-fast: 150ms ease;
+    --bee-transition-normal: 250ms ease;
+    --bee-transition-slow: 350ms ease;
+}
+
+/* ===== Reset et Base ===== */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--bee-font-family);
+    font-weight: 700;
+    line-height: 1.5;
+    color: var(--bee-on-surface);
+    background: var(--bee-gradient-background);
+    min-height: 100vh;
+}
+
+a {
+    color: var(--bee-honey);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color var(--bee-transition-fast);
+}
+
+a:hover {
+    color: var(--bee-honey-dark);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--bee-on-surface);
+}
+
+h1 { font-size: 34px; font-weight: 700; }
+h2 { font-size: 28px; font-weight: 700; }
+h3 { font-size: 22px; }
+h4 { font-size: 20px; }
+h5 { font-size: 17px; }
+h6 { font-size: 15px; }
+
+p {
+    margin: 0 0 var(--bee-spacing-md);
+}
+
+/* ===== App Container ===== */
+#app {
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* ===== Layout Principal ===== */
+#page {
+    display: grid;
+    width: 100%;
+    min-height: 100vh;
+    grid-template-areas:
+        "nav head"
+        "nav main";
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 220px 1fr;
+}
+
+/* ===== Header ===== */
+#page > header {
+    grid-area: head;
+    background: var(--bee-gradient-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: var(--bee-spacing-md) var(--bee-spacing-lg);
+    border-bottom: 1px solid var(--bee-gray-200);
+    backdrop-filter: blur(10px);
+}
+
+header h1 {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    background: var(--bee-gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+header .profil {
+    position: absolute;
+    right: var(--bee-spacing-lg);
+    padding: var(--bee-spacing-sm) var(--bee-spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--bee-spacing-sm);
+    color: var(--bee-on-surface);
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: var(--bee-radius-full);
+    background: var(--bee-gradient-card);
+    box-shadow: var(--bee-shadow-sm);
+    transition: all var(--bee-transition-normal);
+}
+
+header .profil:hover {
+    box-shadow: var(--bee-shadow-md);
+    transform: translateY(-1px);
+}
+
+header .profil .username {
+    font-weight: 600;
+    color: var(--bee-honey);
+}
+
+header .profil .user-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--bee-honey);
+    object-fit: cover;
+}
+
+/* ===== Navigation Latérale ===== */
+#page > nav {
+    grid-area: nav;
+    background: var(--bee-gradient-card);
+    padding: var(--bee-spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--bee-spacing-lg);
+    border-right: 1px solid var(--bee-gray-200);
+    min-height: 100vh;
+    position: sticky;
+    top: 0;
+}
+
+nav .bee-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--bee-radius-xl);
+    background: var(--bee-gradient-card);
+    box-shadow: var(--bee-shadow-md);
+    padding: var(--bee-spacing-sm);
+    margin: 0 auto var(--bee-spacing-md);
+    display: block;
+}
+
+nav .nav-head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--bee-spacing-sm);
+    width: 100%;
+}
+
+nav .accueil,
+nav .modules,
+nav .ruchers,
+nav .notes,
+nav .profil-link,
+nav .deconnexion {
+    display: flex;
+    align-items: center;
+    gap: var(--bee-spacing-sm);
+    padding: var(--bee-spacing-sm) var(--bee-spacing-md);
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--bee-on-surface);
+    border-radius: var(--bee-radius-md);
+    transition: all var(--bee-transition-normal);
+    text-decoration: none;
+}
+
+nav .accueil:hover,
+nav .modules:hover,
+nav .ruchers:hover,
+nav .notes:hover,
+nav .profil-link:hover,
+nav .deconnexion:hover {
+    background: var(--bee-gray-100);
+    transform: translateX(4px);
+}
+
+/* Lien actif dans la navigation */
+.router-link-exact-active {
+    background: var(--bee-gradient-primary) !important;
+    color: white !important;
+    box-shadow: var(--bee-shadow-colored);
+    transform: translateX(4px);
+}
+
+.router-link-exact-active:hover {
+    background: var(--bee-gradient-primary) !important;
+}
+
+/* ===== Contenu Principal ===== */
+#page > main {
+    grid-area: main;
+    background: var(--bee-background);
+    padding: var(--bee-spacing-lg);
+    min-height: calc(100vh - 80px);
+    overflow-y: auto;
+}
+
+/* ===== Cards & Composants ===== */
+.card {
+    background: var(--bee-gradient-card);
+    border-radius: var(--bee-radius-lg);
+    box-shadow: var(--bee-shadow-md);
+    padding: var(--bee-spacing-md);
+    transition: all var(--bee-transition-normal);
+}
+
+.card:hover {
+    box-shadow: var(--bee-shadow-lg);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--bee-spacing-md);
+    padding-bottom: var(--bee-spacing-sm);
+    border-bottom: 1px solid var(--bee-gray-200);
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--bee-on-surface);
+}
+
+.card-subtitle {
+    font-size: 13px;
+    color: var(--bee-on-surface-variant);
+}
+
+/* ===== Boutons ===== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--bee-spacing-sm);
+    padding: var(--bee-spacing-sm) var(--bee-spacing-lg);
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--bee-radius-md);
+    cursor: pointer;
+    transition: all var(--bee-transition-normal);
+}
+
+.btn-primary {
+    background: var(--bee-gradient-primary);
+    color: white;
+    box-shadow: var(--bee-shadow-colored);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(255, 183, 0, 0.4);
+}
+
+.btn-secondary {
+    background: var(--bee-gray-100);
+    color: var(--bee-on-surface);
+}
+
+.btn-secondary:hover {
+    background: var(--bee-gray-200);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--bee-honey);
+    color: var(--bee-honey);
+}
+
+.btn-outline:hover {
+    background: var(--bee-honey);
+    color: white;
+}
+
+/* ===== Badges ===== */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--bee-spacing-xs);
+    padding: var(--bee-spacing-xs) var(--bee-spacing-sm);
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: var(--bee-radius-sm);
+}
+
+.badge-success {
+    background: rgba(76, 175, 80, 0.15);
+    color: var(--bee-success);
+}
+
+.badge-error {
+    background: rgba(244, 67, 54, 0.15);
+    color: var(--bee-error);
+}
+
+.badge-warning {
+    background: rgba(255, 152, 0, 0.15);
+    color: var(--bee-warning);
+}
+
+.badge-info {
+    background: rgba(33, 150, 243, 0.15);
+    color: var(--bee-info);
+}
+
+/* ===== Inputs ===== */
+.input {
+    width: 100%;
+    padding: var(--bee-spacing-md);
+    font-family: inherit;
+    font-size: 16px;
+    border: 2px solid var(--bee-gray-200);
+    border-radius: var(--bee-radius-md);
+    background: var(--bee-surface);
+    color: var(--bee-on-surface);
+    transition: all var(--bee-transition-fast);
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--bee-honey);
+    box-shadow: 0 0 0 4px rgba(255, 183, 0, 0.15);
+}
+
+.input::placeholder {
+    color: var(--bee-on-surface-variant);
+}
+
+/* ===== Carte Leaflet ===== */
+#map {
+    border-radius: var(--bee-radius-lg);
+    box-shadow: var(--bee-shadow-md);
+    overflow: hidden;
+}
+
+/* ===== Filtres ===== */
+.filters {
+    position: absolute;
+    top: var(--bee-spacing-lg);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: var(--bee-spacing-sm);
+    z-index: 1000;
+    padding: var(--bee-spacing-sm);
+    background: var(--bee-gradient-glass);
+    backdrop-filter: blur(10px);
+    border-radius: var(--bee-radius-full);
+    box-shadow: var(--bee-shadow-md);
+}
+
+.filters button {
+    padding: var(--bee-spacing-xs) var(--bee-spacing-md);
+    border-radius: var(--bee-radius-full);
+    background: var(--bee-surface);
+    border: none;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--bee-on-surface);
+    cursor: pointer;
+    transition: all var(--bee-transition-fast);
+}
+
+.filters button:hover {
+    background: var(--bee-gray-100);
+}
+
+.filters button.active {
+    background: var(--bee-gradient-primary);
+    color: white;
+    box-shadow: var(--bee-shadow-colored);
+}
+
+/* ===== Légende ===== */
+.legende {
+    position: absolute;
+    bottom: var(--bee-spacing-lg);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bee-gradient-glass);
+    backdrop-filter: blur(10px);
+    padding: var(--bee-spacing-sm) var(--bee-spacing-md);
+    border-radius: var(--bee-radius-md);
+    font-size: 12px;
+    line-height: 1.6;
+    z-index: 1000;
+    box-shadow: var(--bee-shadow-sm);
+}
+
+/* ===== Scrollbar personnalisée ===== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bee-gray-100);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--bee-gray-400);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--bee-gray-500);
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.pulse {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* ===== États de chargement ===== */
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--bee-gray-200) 0%,
+        var(--bee-gray-100) 50%,
+        var(--bee-gray-200) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: var(--bee-radius-sm);
+}
+
+/* ===== Messages vides ===== */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--bee-spacing-xxl);
+    text-align: center;
+}
+
+.empty-state-icon {
+    font-size: 48px;
+    margin-bottom: var(--bee-spacing-md);
+    opacity: 0.5;
+}
+
+.empty-state-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--bee-on-surface);
+    margin-bottom: var(--bee-spacing-sm);
+}
+
+.empty-state-text {
+    font-size: 14px;
+    color: var(--bee-on-surface-variant);
+    max-width: 300px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+    #page {
+        grid-template-columns: 180px 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    #page {
+        grid-template-areas:
+            "head"
+            "main"
+            "nav";
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto;
+    }
+    
+    #page > nav {
+        flex-direction: row;
+        justify-content: space-around;
+        padding: var(--bee-spacing-sm);
+        border-right: none;
+        border-top: 1px solid var(--bee-gray-200);
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        min-height: auto;
+        z-index: 100;
+    }
+    
+    nav .bee-icon {
+        display: none;
+    }
+    
+    nav .nav-head {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    
+    nav .accueil,
+    nav .modules,
+    nav .ruchers,
+    nav .notes {
+        flex-direction: column;
+        padding: var(--bee-spacing-xs);
+        font-size: 11px;
+        gap: 2px;
+    }
+    
+    #page > main {
+        padding-bottom: 80px;
+    }
+}
